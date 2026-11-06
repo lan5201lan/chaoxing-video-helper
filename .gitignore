@@ -1,0 +1,15 @@
+# 打包产物（体积大，不上传）
+dist/
+build/
+*.zip
+
+# ADB 二进制工具
+tools/
+
+# 运行时临时文件
+screenshots/
+__pycache__/
+*.pyc
+
+# 个人课程进度（含隐私，不上传）
+progress.txt
