@@ -98,8 +98,10 @@ def find_min_section(ocr_results, skip=None):
         skip = set()
     sections = []
     for (text, conf, cx, cy) in ocr_results:
+        if cy < 150:  # 排除顶部状态栏/标题栏的干扰数字（时间、电量等）
+            continue
         t = text.strip()
-        m = re.match(r"^(\d+\.\d+\.\d+)", t)
+        m = re.match(r"^([1-9]\d*\.\d+(?:\.\d+)?)", t)
         if m:
             num = m.group(1)
             if num not in skip:
@@ -119,7 +121,7 @@ def is_section_list(ocr_results):
     """
     import re
     nums = [t[0].strip() for t in ocr_results
-            if re.match(r"^\d+\.\d+\.\d+", t[0].strip())]
+            if t[3] >= 150 and re.match(r"^[1-9]\d*\.\d+(?:\.\d+)?", t[0].strip())]
     return len(nums) >= 2
 
 
